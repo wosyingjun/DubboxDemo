@@ -1,3 +1,7 @@
+>Dubbo是一个来自阿里巴巴的开源分布式服务框架，当当根据自身的需求，为Dubbo实现了一些新的功能，包括REST风格远程调用、Kryo/FST序列化等等，并将其命名为Dubbox。
+
+Demo：[https://github.com/wosyingjun/DubboxDemo](https://github.com/wosyingjun/DubboxDemo)    
+类似范例：[http://wosyingjun.iteye.com/blog/2312553](http://wosyingjun.iteye.com/blog/2312553)
 
 ##Dubbo架构
 ![](http://dubbo.io/dubbo-architecture.jpg-version=1&modificationDate=1330892870000.jpg)
