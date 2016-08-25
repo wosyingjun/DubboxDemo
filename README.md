@@ -20,6 +20,7 @@ Dubbo是阿里开源的RPC服务调用框架，已经3年没有维护了,而当�
 * 升级ZooKeeper客户端：将dubbo中的zookeeper客户端升级到最新的版本，以修正老版本中包含的bug。
 * 支持完全基于Java代码的Dubbo配置：基于Spring的Java Config，实现完全无XML的纯Java代码方式来配置dubbo
 * 调整Demo应用：暂时将dubbo的demo应用调整并改写以主要演示REST功能、Dubbo协议的新序列化方式、基于Java代码的Spring配置等等。
+
 **注：Dubbox和Dubbo 2.X是兼容的，没有改变Dubbo的任何已有的功能和配置方式（除了升级了Spring之类的版本）**
 
 ##DubboxDemo项目的安装
