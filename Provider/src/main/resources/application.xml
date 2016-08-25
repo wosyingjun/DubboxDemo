@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	   http://code.alibabatech.com/schema/dubbo
+	   http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 扫描Service-->
+    <context:component-scan base-package="com.yingjun.dubbox.services" />
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="provider" owner="yingjun"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="zookeeper://192.168.xx.xx:2181?backup=192.168.xx.xx:2182,192.168.xx.xx:2183" />
+
+    <!-- 这个采用推荐的dubbo协议(tcp传输协议)（底层通过netty实现）（默认采用Hessian序列化方式）在20990端口暴露服务 -->
+    <!--<dubbo:protocol name="dubbo" port="20990"  />-->
+    <!--dubbox中引入Kryo和FST这两种高效Java序列化实现，来逐步取代原生dubbo中的hessian2,如果使用kryo记得添加依赖 -->
+     <dubbo:protocol name="dubbo" serialization="kryo"  port="20990"  />
+    <!-- 采用dubbox提供的REST风格服务（基于resteasy）(server可以选jetty tomcat(推荐) netty)，注意在相应的服务上加上注解以及相应依赖的引入-->
+    <!--rest服务默认都是采用http长连接来访问，如果想切换为短连接，配置keepalive="false"-->
+    <!--<dubbo:protocol name="rest" port="8080"  server="tomcat" />-->
+
+    <!-- timeout远程服务调用超时时间(毫秒) -->
+    <!-- threads该服务线程池大小 -->
+    <!-- accepts限制服务器端接受的连接不能超过10个 -->
+    <!-- 随机token令牌，使用UUID生成 ，防止消费者绕过注册中心访问提供者-->
+    <dubbo:provider timeout="5000" threadpool="fixed"  threads="100" accepts="1000" token="true"/>
+
+    <!-- 暴露服务接口 一个服务可以用多个协议暴露，一个服务也可以注册到多个注册中心-->
+    <!--Provider上尽量多配置Consumer端的属性，让Provider实现者一开始就思考Provider服务特点、服务质量的问题-->
+    <dubbo:service interface="com.yingjun.dubbox.api.UserService" ref="userService" />
+
+
+</beans>

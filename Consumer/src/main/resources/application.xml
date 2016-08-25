@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	   http://code.alibabatech.com/schema/dubbo
+	   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="consumer" owner="yingjun"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="zookeeper://192.168.xx.xx:2181?backup=192.168.xx.xx:2182,192.168.xx.xx:2183"/>
+
+    <!-- 用户服务接口 -->
+    <!-- retries表示失败后的重试次数，timeout表示超时时间，actives表示客户端并发限制数 服务端并发控制可用executes参数 -->
+    <dubbo:reference id="userService" interface="com.yingjun.dubbox.api.UserService">
+        <dubbo:method name="getUserByPhone"  retries="2" timeout="5000" ></dubbo:method>
+        <dubbo:method name="getUserByName"   actives="10" ></dubbo:method>
+    </dubbo:reference>
+
+
+</beans>
